@@ -6,9 +6,9 @@ type ViewMode = 'day' | 'month' | 'year';
 interface JournalEntryLine {
   id: string;
   transaction_date: string;
-  je_id: string; // New JE ID field
+  je_id: string; // JE ID (replaces Number)
   transaction_type: string;
-  bank_name: string; // New Bank Name field
+  bank_name: string; // Bank Name (from 8 banks)
   name: string;
   description: string;
   distribution_account_number: string;
@@ -87,7 +87,8 @@ export function JournalEntries() {
     const matchSearch = (je.description?.toLowerCase() || '').includes(searchTerm.toLowerCase()) || 
                         (je.name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
                         je.je_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        je.account_full_name.toLowerCase().includes(searchTerm.toLowerCase());
+                        je.account_full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        je.bank_name.toLowerCase().includes(searchTerm.toLowerCase());
 
     return matchDate && matchSearch;
   });
@@ -184,7 +185,7 @@ export function JournalEntries() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={9} className="p-12 text-center text-gray-400">
+                  <td colSpan={10} className="p-12 text-center text-gray-400">
                     <div className="flex flex-col items-center justify-center">
                        <Folder size={48} className="mb-4 opacity-20" />
                        <p>No Journal Entries found for this period.</p>
