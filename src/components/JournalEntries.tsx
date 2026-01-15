@@ -6,8 +6,9 @@ type ViewMode = 'day' | 'month' | 'year';
 interface JournalEntryLine {
   id: string;
   transaction_date: string;
+  je_id: string; // New JE ID field
   transaction_type: string;
-  je_number: string;
+  bank_name: string; // New Bank Name field
   name: string;
   description: string;
   distribution_account_number: string;
@@ -16,20 +17,31 @@ interface JournalEntryLine {
   credit: number | null;
 }
 
+const BANKS = [
+  '三井住友（法人）',
+  '三井住友銀行　外貨口座',
+  '三菱ＵＦＪ',
+  '三井住友　担保定期預金',
+  '三井住友CreditCard',
+  'EastWest Bank（checking）',
+  'Citi Bank（USD）',
+  'Citi Bank（SGD）',
+];
+
 const MOCK_DATA: JournalEntryLine[] = [
-  { id: '1', transaction_date: '2025-11-06', transaction_type: 'Journal Entry', je_number: '327', name: 'JKO/Oct', description: '', distribution_account_number: '', account_full_name: 'Accounts Receivable UKD', debit: null, credit: 22006.32 },
-  { id: '2', transaction_date: '2025-11-06', transaction_type: 'Journal Entry', je_number: '327', name: 'JKO/Oct', description: '', distribution_account_number: '', account_full_name: 'Citi Bank (USD)', debit: 22006.32, credit: null },
-  { id: '3', transaction_date: '2025-11-06', transaction_type: 'Journal Entry', je_number: '327', name: 'JKO/Oct', description: '', distribution_account_number: '', account_full_name: 'Banking fee', debit: 60.00, credit: null },
-  { id: '4', transaction_date: '2025-11-13', transaction_type: 'Journal Entry', je_number: '340', name: 'QB fee', description: '', distribution_account_number: '', account_full_name: 'Payment fee', debit: 330.00, credit: null },
-  { id: '5', transaction_date: '2025-11-13', transaction_type: 'Journal Entry', je_number: '340', name: '', description: '', distribution_account_number: '', account_full_name: 'Accounts receivable/CTWJP', debit: null, credit: 330.00 },
-  { id: '6', transaction_date: '2025-11-14', transaction_type: 'Journal Entry', je_number: '338', name: '', description: '', distribution_account_number: '', account_full_name: 'Citi Bank (USD)', debit: 1930.52, credit: null },
-  { id: '7', transaction_date: '2025-11-14', transaction_type: 'Journal Entry', je_number: '338', name: '', description: '', distribution_account_number: '', account_full_name: 'Banking fee', debit: 55.00, credit: null },
-  { id: '8', transaction_date: '2025-11-14', transaction_type: 'Journal Entry', je_number: '338', name: '', description: '', distribution_account_number: '', account_full_name: 'Accounts receivable/CTWJP', debit: null, credit: 1985.52 },
-  { id: '9', transaction_date: '2025-11-21', transaction_type: 'Journal Entry', je_number: '328', name: 'BILLING INVOICE PAID', description: 'BILLING INVOICE PAID', distribution_account_number: '', account_full_name: 'Banking fee', debit: 350.00, credit: null },
-  { id: '10', transaction_date: '2025-11-21', transaction_type: 'Journal Entry', je_number: '328', name: 'BILLING INVOICE PAID', description: 'BILLING INVOICE PAID', distribution_account_number: '', account_full_name: 'Citi Bank (USD)', debit: null, credit: 350.00 },
-  { id: '11', transaction_date: '2025-11-26', transaction_type: 'Journal Entry', je_number: '326', name: '[Doraemon] System Development', description: '', distribution_account_number: '', account_full_name: 'Accounts receivable/CTWJP', debit: 61072.91, credit: null },
-  { id: '12', transaction_date: '2025-11-26', transaction_type: 'Journal Entry', je_number: '326', name: 'CTW SH', description: '', distribution_account_number: '', account_full_name: 'Prepaid Expenses', debit: 499570.13, credit: null },
-  { id: '13', transaction_date: '2025-11-26', transaction_type: 'Journal Entry', je_number: '326', name: '', description: '', distribution_account_number: '', account_full_name: 'EastWest Bank (USD)', debit: null, credit: 560643.04 },
+  { id: '1', transaction_date: '2025-11-06', je_id: 'JE-001', transaction_type: 'Journal Entry', bank_name: BANKS[0], name: 'JKO/Oct', description: '', distribution_account_number: '', account_full_name: 'Accounts Receivable UKD', debit: null, credit: 22006.32 },
+  { id: '2', transaction_date: '2025-11-06', je_id: 'JE-001', transaction_type: 'Journal Entry', bank_name: BANKS[6], name: 'JKO/Oct', description: '', distribution_account_number: '', account_full_name: 'Citi Bank (USD)', debit: 22006.32, credit: null },
+  { id: '3', transaction_date: '2025-11-06', je_id: 'JE-001', transaction_type: 'Journal Entry', bank_name: BANKS[0], name: 'JKO/Oct', description: '', distribution_account_number: '', account_full_name: 'Banking fee', debit: 60.00, credit: null },
+  { id: '4', transaction_date: '2025-11-13', je_id: 'JE-002', transaction_type: 'Journal Entry', bank_name: BANKS[2], name: 'QB fee', description: '', distribution_account_number: '', account_full_name: 'Payment fee', debit: 330.00, credit: null },
+  { id: '5', transaction_date: '2025-11-13', je_id: 'JE-002', transaction_type: 'Journal Entry', bank_name: BANKS[2], name: '', description: '', distribution_account_number: '', account_full_name: 'Accounts receivable/CTWJP', debit: null, credit: 330.00 },
+  { id: '6', transaction_date: '2025-11-14', je_id: 'JE-003', transaction_type: 'Journal Entry', bank_name: BANKS[6], name: '', description: '', distribution_account_number: '', account_full_name: 'Citi Bank (USD)', debit: 1930.52, credit: null },
+  { id: '7', transaction_date: '2025-11-14', je_id: 'JE-003', transaction_type: 'Journal Entry', bank_name: BANKS[6], name: '', description: '', distribution_account_number: '', account_full_name: 'Banking fee', debit: 55.00, credit: null },
+  { id: '8', transaction_date: '2025-11-14', je_id: 'JE-003', transaction_type: 'Journal Entry', bank_name: BANKS[6], name: '', description: '', distribution_account_number: '', account_full_name: 'Accounts receivable/CTWJP', debit: null, credit: 1985.52 },
+  { id: '9', transaction_date: '2025-11-21', je_id: 'JE-004', transaction_type: 'Journal Entry', bank_name: BANKS[4], name: 'BILLING INVOICE PAID', description: 'BILLING INVOICE PAID', distribution_account_number: '', account_full_name: 'Banking fee', debit: 350.00, credit: null },
+  { id: '10', transaction_date: '2025-11-21', je_id: 'JE-004', transaction_type: 'Journal Entry', bank_name: BANKS[6], name: 'BILLING INVOICE PAID', description: 'BILLING INVOICE PAID', distribution_account_number: '', account_full_name: 'Citi Bank (USD)', debit: null, credit: 350.00 },
+  { id: '11', transaction_date: '2025-11-26', je_id: 'JE-005', transaction_type: 'Journal Entry', bank_name: BANKS[2], name: '[Doraemon] System Development', description: '', distribution_account_number: '', account_full_name: 'Accounts receivable/CTWJP', debit: 61072.91, credit: null },
+  { id: '12', transaction_date: '2025-11-26', je_id: 'JE-005', transaction_type: 'Journal Entry', bank_name: BANKS[5], name: 'CTW SH', description: '', distribution_account_number: '', account_full_name: 'Prepaid Expenses', debit: 499570.13, credit: null },
+  { id: '13', transaction_date: '2025-11-26', je_id: 'JE-005', transaction_type: 'Journal Entry', bank_name: BANKS[7], name: '', description: '', distribution_account_number: '', account_full_name: 'EastWest Bank (USD)', debit: null, credit: 560643.04 },
 ];
 
 export function JournalEntries() {
@@ -74,7 +86,7 @@ export function JournalEntries() {
 
     const matchSearch = (je.description?.toLowerCase() || '').includes(searchTerm.toLowerCase()) || 
                         (je.name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-                        je.je_number.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        je.je_id.toLowerCase().includes(searchTerm.toLowerCase()) ||
                         je.account_full_name.toLowerCase().includes(searchTerm.toLowerCase());
 
     return matchDate && matchSearch;
@@ -138,9 +150,10 @@ export function JournalEntries() {
           <table className="w-full text-left text-sm whitespace-nowrap">
             <thead className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
               <tr>
+                <th className="px-4 py-3 font-semibold text-gray-900 border-r border-gray-100 last:border-r-0">JE ID</th>
                 <th className="px-4 py-3 font-semibold text-gray-900 border-r border-gray-100 last:border-r-0">Transaction date</th>
                 <th className="px-4 py-3 font-semibold text-gray-900 border-r border-gray-100 last:border-r-0">Transaction type</th>
-                <th className="px-4 py-3 font-semibold text-gray-900 border-r border-gray-100 last:border-r-0">Number</th>
+                <th className="px-4 py-3 font-semibold text-gray-900 border-r border-gray-100 last:border-r-0">Bank Name</th>
                 <th className="px-4 py-3 font-semibold text-gray-900 border-r border-gray-100 last:border-r-0">Name</th>
                 <th className="px-4 py-3 font-semibold text-gray-900 border-r border-gray-100 last:border-r-0">Memo/Description</th>
                 <th className="px-4 py-3 font-semibold text-gray-900 border-r border-gray-100 last:border-r-0">Distribution account number</th>
@@ -153,9 +166,10 @@ export function JournalEntries() {
               {filteredData.length > 0 ? (
                 filteredData.map((row) => (
                   <tr key={row.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-2 border-r border-gray-50 last:border-r-0 font-medium text-blue-600">{row.je_id}</td>
                     <td className="px-4 py-2 border-r border-gray-50 last:border-r-0">{row.transaction_date.replace(/-/g, '/')}</td>
                     <td className="px-4 py-2 border-r border-gray-50 last:border-r-0">{row.transaction_type}</td>
-                    <td className="px-4 py-2 border-r border-gray-50 last:border-r-0">{row.je_number}</td>
+                    <td className="px-4 py-2 border-r border-gray-50 last:border-r-0">{row.bank_name}</td>
                     <td className="px-4 py-2 border-r border-gray-50 last:border-r-0 max-w-[200px] truncate" title={row.name}>{row.name}</td>
                     <td className="px-4 py-2 border-r border-gray-50 last:border-r-0 max-w-[250px] truncate" title={row.description}>{row.description}</td>
                     <td className="px-4 py-2 border-r border-gray-50 last:border-r-0">{row.distribution_account_number}</td>
