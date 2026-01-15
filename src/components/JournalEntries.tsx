@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Calendar, ChevronLeft, ChevronRight, Search, Folder } from 'lucide-react';
 
 type ViewMode = 'day' | 'month' | 'year';

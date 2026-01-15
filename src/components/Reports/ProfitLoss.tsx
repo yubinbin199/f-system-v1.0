@@ -1,4 +1,3 @@
-import React from 'react';
 import { Share2, Printer } from 'lucide-react';
 
 export function ProfitLoss() {

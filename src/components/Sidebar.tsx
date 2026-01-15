@@ -1,4 +1,4 @@
-import { FileText, Landmark, ArrowRightLeft, BookOpen, PieChart, ChevronDown, ChevronRight } from 'lucide-react';
+import { Landmark, BookOpen, PieChart, ChevronDown, ChevronRight } from 'lucide-react';
 import { UserProfile } from './UserProfile';
 import { useState } from 'react';
 
